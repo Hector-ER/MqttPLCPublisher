@@ -9,12 +9,11 @@
 		<!-- Timeout="5000"-->
 	</PLCx>
 	<PLC Name="CTM4"
-		Protocol="EIP"
-		Type="CLX"
+		Protocol="AB_EIP"
+		Type="ControlLogix"
 		Address="130.1.64.70"
 		Path="1,0"
-		>
-		<!-- Timeout="5000"-->
+		Timeout="5000">
 	</PLC>
 	<Tagx Name="M18"
 		 Address="M18_Velocidad"
@@ -28,7 +27,7 @@
 		 PLC="CTM4"
 		 Period= "100">
 	</Tag>
-	<Tagx Name="M18_Velocidad"
+	<Tag Name="M18_Velocidad"
 		 Type="DINT"
 		 Period= "1000">
 		<PLC
@@ -39,7 +38,7 @@
 			>
 			<!-- Timeout="5000"-->
 		</PLC>>
-	</Tagx>
+	</Tag>
 	<Broker Name="BA3490" Address="BA3490" Port="1883"/>
 	<Publish Topic="Prueba/Test"
 			 Broker="BA3490"
