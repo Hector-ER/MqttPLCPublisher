@@ -32,7 +32,17 @@ namespace MqttPLCPublisher
 
 
         public Tagx(XmlNode conf):base (conf) {
-            if (conf.Attributes.GetNamedItem("PLC") != null)
+            /*foreach (XmlAttribute a in conf.Attributes)
+            {
+                if ("PLC".CompareTo(a.Name.ToUpper())==0) {
+                    Plc = PLCs.GetValueOrDefault(a.Value.ToUpper());
+                }
+                {
+
+                }
+            */
+
+                        if (conf.Attributes.GetNamedItem("PLC") != null)
             {
                 Plc = PLCs.GetValueOrDefault(conf.Attributes.GetNamedItem("PLC").Value);
             }
@@ -63,7 +73,6 @@ namespace MqttPLCPublisher
 
         }
 
-        
         public void leer()
         {
             

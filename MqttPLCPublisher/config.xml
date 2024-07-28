@@ -45,8 +45,8 @@
 			 Broker="BA3490"
 			 Tag="Test_vel">
 	</Publish>
-	<Suscribe Broker="BA3490"
+	<Subscribe Broker="BA3490"
 			  Topic="Prueba/Test"
 			 >
-	</Suscribe>
+	</Subscribe>
 </Config>

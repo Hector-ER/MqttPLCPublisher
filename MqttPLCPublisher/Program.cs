@@ -33,11 +33,14 @@ Dictionary<String, PLC> PLCs = new Dictionary<String, PLC>();
 Dictionary<String, Tagx> Tags = new Dictionary<string, Tagx>(); 
 Dictionary<String, Broker> Brokers = new Dictionary<string, Broker>();
 Dictionary<String, Publish> Publishes = new Dictionary<string, Publish>();
-Dictionary<String, Subscribe> Suscribes = new Dictionary<string, Subscribe>();
+Dictionary<String, Subscribe> Subscribes = new Dictionary<string, Subscribe>();
 
 Tagx.PLCs = PLCs;
 Publish.Brokers = Brokers;
 Publish.Tags = Tags;
+Subscribe.Brokers = Brokers;
+Subscribe.Tags = Tags;
+
 
 
 try
@@ -87,6 +90,11 @@ try
                 Publish b = new Publish(e);
                 Publishes.Add("", b);
             }
+            if (e.Name == "Subscribe")
+            {
+                Subscribe b = new Subscribe(e);
+                Subscribes.Add("", b);
+            }
 
         }
     }
@@ -120,6 +128,11 @@ foreach (Tagx t in Tags.Values)
     p.ejecutar();
 }*/
 // Cada Tag se publica
+
+foreach (Subscribe p in Subscribes.Values)
+{
+    p.ejecutar();
+}
 
 while (true)
 {

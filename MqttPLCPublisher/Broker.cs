@@ -17,6 +17,8 @@ namespace MqttPLCPublisher
 
         public IMqttClient? mqttClient;
 
+        public MqttFactory factory;
+
         public Broker(XmlNode conf)
         {
             if (conf.Attributes.GetNamedItem("Name") != null)
@@ -43,7 +45,7 @@ namespace MqttPLCPublisher
             //string password = "******";
 
             // Create a MQTT client factory
-            var factory = new MqttFactory();
+            factory = new MqttFactory();
 
             // Create a MQTT client instance
             mqttClient = factory.CreateMqttClient();
