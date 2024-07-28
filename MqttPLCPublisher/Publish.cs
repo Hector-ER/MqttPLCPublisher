@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MqttPLCPublisher
 {
@@ -17,6 +18,7 @@ namespace MqttPLCPublisher
         public String Topico;
         public Broker broker;
         public Tagx tag;
+        public Boolean AlCambiar;
         public Publish(XmlNode conf)
         {
             if (conf.Attributes.GetNamedItem("Topic") != null)
@@ -35,24 +37,39 @@ namespace MqttPLCPublisher
             {
                 tag.Publishes.Add("", this);
             }
+            AlCambiar = false;
         }
         async public void ejecutar()
         {
             if (broker.mqttClient != null)
                 {
+                if (broker.mqttClient.IsConnected == false)
+                {
+                    broker.conectar();
 
-                String s = $"\"id\": \"" + tag.Nombre + "\", \"v\": \"" + tag.Valor + "\", \"q\": 0 \"t\": 0";
-                    for (int i = 0; i < 10; i++)
-                    {
+                }
+                
+                String s = $"\"id\": \"" + tag.Nombre + "\", \"v\": \"" + tag.Valor + "\", \"q\": \""+tag.quality+"\", \"t\": \""+tag.timestamp+"\"";
+                String s2 = "{ \"timestamp\" : \"+"+ DateTime.Now.ToString("yy/MM/dd HH:mm:ss")+"\", \"values\" : {"+s+" } }";
+
+                    //for (int i = 0; i < 10; i++)
+                    //{
                         var message = new MqttApplicationMessageBuilder()
                             .WithTopic(Topico)
-                            .WithPayload(s)
+                            .WithPayload(s2)
                             .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                             .WithRetainFlag()
                             .Build();
 
-                        await broker.mqttClient.PublishAsync(message);
-                        await Task.Delay(1000); // Wait for 1 second
+                    try
+                    {
+                    await broker.mqttClient.PublishAsync(message);
+                    //await Task.Delay(1000); // Wait for 1 second
+                }
+                    catch (Exception e)
+                    {
+                    
+                        
                     }
 
 

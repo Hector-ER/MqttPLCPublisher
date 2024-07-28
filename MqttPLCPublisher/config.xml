@@ -22,10 +22,10 @@
 		 PLC="Prueba"
 		 Period= "100">
 	</Tagx>
-	<Tag Name="M18"
-		 Address="M18_Velocidad"
+	<Tag Name="Test_vel"
+		 Address="test_vel"
 		 Type="DINT"
-		 PLC="Prueba"
+		 PLC="CTM4"
 		 Period= "100">
 	</Tag>
 	<Tagx Name="M18_Velocidad"
@@ -43,7 +43,10 @@
 	<Broker Name="BA3490" Address="BA3490" Port="1883"/>
 	<Publish Topic="Prueba/Test"
 			 Broker="BA3490"
-			 Tag="M18">
+			 Tag="Test_vel">
 	</Publish>
+	<Suscribe Broker="BA3490"
+			  Topic="Prueba/Test"
+			 >
+	</Suscribe>
 </Config>
-

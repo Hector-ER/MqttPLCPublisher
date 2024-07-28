@@ -24,6 +24,8 @@ namespace MqttPLCPublisher
         public int Periodo = 100000;
         public int Valor = 0;
         public int Estado = 0;  // 1 = leído
+        public int quality = 0;
+        public DateTime timestamp;
         public bool Inicializado = false;
         TagDint t = new TagDint();
         System.Timers.Timer timer;
@@ -148,9 +150,16 @@ namespace MqttPLCPublisher
                 Console.Write("- "+ t.Value.ToString());
                 Valor = t.Value;
                 Estado = 1;
+                quality = 1;
+                timestamp = DateTime.Now;
+                
                 foreach (Publish p in Publishes.Values)
                 {
-                    p.ejecutar();
+                    if (!p.AlCambiar || Valor != ValorAnterior)
+                    {
+                        p.ejecutar();
+                    }
+                    
                 }
             } catch
             {

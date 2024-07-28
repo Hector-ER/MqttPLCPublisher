@@ -8,19 +8,6 @@ using System.Xml;
 
 Console.WriteLine("Hello, World!");
 
-/*var myTag = new Tag<DintPlcMapper, int>()
-{
-    Name = "PROGRAM:SomeProgram.SomeDINT",
-    Gateway = "192.168.1.10",
-    Path = "1,0",
-    PlcType = PlcType.ControlLogix,
-    Protocol = Protocol.ab_eip,
-    Timeout = TimeSpan.FromSeconds(5)
-}; 
-
-myTag.Initialize();
-*/
-
 // Lee archivo .xml
 /*
  * El XML tendrá un elemento Tags
@@ -46,6 +33,7 @@ Dictionary<String, PLC> PLCs = new Dictionary<String, PLC>();
 Dictionary<String, Tagx> Tags = new Dictionary<string, Tagx>(); 
 Dictionary<String, Broker> Brokers = new Dictionary<string, Broker>();
 Dictionary<String, Publish> Publishes = new Dictionary<string, Publish>();
+Dictionary<String, Subscribe> Suscribes = new Dictionary<string, Subscribe>();
 
 Tagx.PLCs = PLCs;
 Publish.Brokers = Brokers;
@@ -54,8 +42,6 @@ Publish.Tags = Tags;
 
 try
 {
-
-
     XmlDocument config = new XmlDocument();
     config.Load("config.xml");
     XmlNode c_nodo = config.DocumentElement;
@@ -82,7 +68,7 @@ try
                 }
                 else
                 {
-                    Tags.Add(t.Nombre + "@" + t.Plc.Nombre, t);
+                    Tags.Add(t.Nombre,t ); // + "@" + t.Plc.Nombre, t);
                 }
 
                 /*if (e.Attributes.GetNamedItem("Name") != null)
