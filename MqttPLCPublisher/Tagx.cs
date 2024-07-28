@@ -1,7 +1,9 @@
-﻿using libplctag.DataTypes;
+﻿using libplctag;
+using libplctag.DataTypes;
 using libplctag.DataTypes.Simple;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
@@ -14,7 +16,7 @@ using System.Xml;
 namespace MqttPLCPublisher
 {
    
-    internal class Tagx: Elemento
+    internal class Tagx
     {
         public static Dictionary<String, PLC> PLCs;
         public Dictionary<String, Publish> Publishes;
@@ -22,38 +24,95 @@ namespace MqttPLCPublisher
         public PLC Plc;
         public String Direccion = "";
         public int Periodo = 100000;
-        public int Valor = 0;
+        public Object Valor;
         public int Estado = 0;  // 1 = leído
         public int quality = 0;
         public DateTime timestamp;
         public bool Inicializado = false;
-        TagDint t = new TagDint();
+        //TagDint t = new TagDint();
         System.Timers.Timer timer;
+        public String Nombre = "";
+        public String Tipo = "";
+        public String NombrePLC = "";
+        //public libplctag.DataTypes. TipoSimple;
+        ITag lib_tag;   
 
 
-        public Tagx(XmlNode conf):base (conf) {
-            /*foreach (XmlAttribute a in conf.Attributes)
+        public Tagx(XmlNode conf) {
+            if (conf.Attributes != null)
             {
-                if ("PLC".CompareTo(a.Name.ToUpper())==0) {
-                    Plc = PLCs.GetValueOrDefault(a.Value.ToUpper());
-                }
+                foreach (XmlAttribute a in conf.Attributes)
                 {
+                    if ("NAME".CompareTo(a.Name.ToUpper()) == 0)
+                    {
+                        Nombre = a.Value.ToUpper();
+                    }
+                    else if ("TYPE".CompareTo(a.Name.ToUpper()) == 0)
+                    {
+                        Tipo = a.Value.ToUpper();
+                 
+                    }
+                    else if ("PLC".CompareTo(a.Name.ToUpper()) == 0)
+                    {
+                        NombrePLC = a.Value.ToUpper();
+                        Plc = PLCs.GetValueOrDefault(a.Value.ToUpper());
+                    }
+                    else if ("PERIOD".CompareTo(a.Name.ToUpper()) == 0)
+                    {
+                        Periodo = Int32.Parse(a.Value);
+                    }
+                    else if ("ADDRESS".CompareTo(a.Name.ToUpper()) == 0)
+                    {
+                        Direccion = a.Value;
+                    }
+                    else
+                    {
+                        Console.Write("Advertencia:  Atributo " + a.Name + " no reconocido");
+                        if (Nombre.Length != 0)
+                        {
+                            Console.WriteLine(" " + Nombre + ".");
+                        }
+                        else
+                        {
+                            Console.WriteLine(".");
 
+                        }
+                    }
                 }
-            */
+            }
 
-                        if (conf.Attributes.GetNamedItem("PLC") != null)
+            if ("BOOL".CompareTo(Tipo) == 0)
             {
-                Plc = PLCs.GetValueOrDefault(conf.Attributes.GetNamedItem("PLC").Value);
+                lib_tag = new TagBool();
+
             }
-            if (conf.Attributes.GetNamedItem("Period") != null)
+            else if ("DINT".CompareTo(Tipo) == 0)
             {
-                Periodo = Int32.Parse(conf.Attributes.GetNamedItem("Period").Value);
+                lib_tag = new TagDint();
             }
-            if (conf.Attributes.GetNamedItem("Address") != null)
+            else if ("INT".CompareTo(Tipo) == 0)
             {
-                Direccion = conf.Attributes.GetNamedItem("Address").Value;
+                lib_tag = new TagInt();
             }
+            else if ("LINT".CompareTo(Tipo) == 0)
+            {
+                lib_tag = new TagLint();
+            }
+            else if ("LREAL".CompareTo(Tipo) == 0)
+            {
+                lib_tag = new TagLreal();
+            }
+            else
+            {
+                if ("".CompareTo(Tipo) != 0)
+                {
+                    Console.WriteLine("Error: Tipo " + Tipo + " no reconocido.");
+                } else {
+                    Console.WriteLine("Error: Tag \"" + Plc.Nombre + "\\\"" + Nombre+" sin tipo.");
+                }
+            }
+            
+
             XmlNodeList nl = conf.ChildNodes;
             foreach (XmlNode n in nl)
             {
@@ -76,30 +135,28 @@ namespace MqttPLCPublisher
         public void leer()
         {
             
-            if (Tipo == "DINT")
+            if (lib_tag != null)
             {
                 if (!Inicializado)
                 {
                     try
                     {
-                        t.Name = Direccion;
-                        t.Gateway = Plc.Direccion;
-                        t.Path = Plc.Ruta;
-                        t.PlcType = libplctag.PlcType.ControlLogix;
-                        t.Protocol = libplctag.Protocol.ab_eip;
-                        t.Timeout = TimeSpan.FromSeconds(5);
-                        //t.Timeout = new TimeSpan(450000000);
-                        t.ReadCompleted += T_ReadCompleted;
-                        t.Aborted += T_Aborted;
-                        t.Destroyed += T_Destroyed;
-                        t.ReadStarted += T_ReadStarted;
-                        t.WriteCompleted += T_WriteCompleted;
-                        t.WriteStarted += T_WriteStarted;
+                        lib_tag.Name = Direccion;
+                        lib_tag.Gateway = Plc.Direccion;
+                        lib_tag.Path = Plc.Ruta;
+                        lib_tag.PlcType = libplctag.PlcType.ControlLogix;
+                        lib_tag.Protocol = libplctag.Protocol.ab_eip;
+                        lib_tag.Timeout = TimeSpan.FromSeconds(5);
+                        lib_tag.ReadCompleted += T_ReadCompleted;
+                        lib_tag.Aborted += T_Aborted;
+                        lib_tag.Destroyed += T_Destroyed;
+                        lib_tag.ReadStarted += T_ReadStarted;
+                        lib_tag.WriteCompleted += T_WriteCompleted;
+                        lib_tag.WriteStarted += T_WriteStarted;
                         timer = new System.Timers.Timer(Periodo);
                         timer.Elapsed += timer_Elapsed;
-                        t.Initialize();
+                        lib_tag.Initialize();
                         Inicializado = true;
-                        
                     }
                     catch (Exception e)
                     {
@@ -113,12 +170,10 @@ namespace MqttPLCPublisher
                 Estado = 0;
                 try
                 {
-                    t.ReadAsync(); //.ContinueWith(delegate { postleer(); } ).ContinueWith( delegate { timer.Start(); });
+                    lib_tag.ReadAsync(); //.ContinueWith(delegate { postleer(); } ).ContinueWith( delegate { timer.Start(); });
                 } catch (Exception e)
                 {
                     Console.WriteLine("Excepción " + e.ToString());
-                    
-
                 }
 
             }
@@ -156,8 +211,8 @@ namespace MqttPLCPublisher
             try
             {
                 var ValorAnterior = Valor;
-                Console.Write("- "+ t.Value.ToString());
-                Valor = t.Value;
+                Console.Write("- "+ lib_tag.Value.ToString());
+                Valor = lib_tag.Value;
                 Estado = 1;
                 quality = 1;
                 timestamp = DateTime.Now;

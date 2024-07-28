@@ -31,7 +31,7 @@ namespace MqttPLCPublisher
             }
             if (conf.Attributes.GetNamedItem("Tag") != null)
             {
-                tag = Tags.GetValueOrDefault(conf.Attributes.GetNamedItem("Tag").Value);
+                tag = Tags.GetValueOrDefault(conf.Attributes.GetNamedItem("Tag").Value.ToUpper());
             }
             if (tag != null)
             {
