@@ -9,6 +9,7 @@ using System.Xml;
 using MQTTnet.Client;
 using MQTTnet.Server;
 using MQTTnet.Extensions.TopicTemplate;
+using System.Text.Json;
 
 
 namespace MqttPLCPublisher
@@ -41,6 +42,12 @@ namespace MqttPLCPublisher
             }
         }
 
+        public class Subscribe_Tag_class
+        {
+            public long Timestamp { get; set; }
+            public object Value { get; set; }
+        }
+
         public async void ejecutar()
         {
             if (broker.mqttClient != null)
@@ -60,15 +67,17 @@ namespace MqttPLCPublisher
           //          .WithTopicTemplate(sampleTemplate.WithParameter("id", "1"))
                 .Build();
 
-                broker.mqttClient.ApplicationMessageReceivedAsync += e =>
-                {
+                broker.mqttClient.ApplicationMessageReceivedAsync += MessageRecive;
+
+                    // += e =>
+                /*{
                     Console.WriteLine("Received application message.");
                     //e.DumpToConsole();
                     Console.WriteLine(e.ToString());
 
 
                     return Task.CompletedTask;
-                };
+                };*/
 
                 var response = await broker.mqttClient.SubscribeAsync(mqttSubscribeOptions, CancellationToken.None);
 
@@ -99,7 +108,14 @@ namespace MqttPLCPublisher
 
             }
         }
-
+        public static async Task MessageRecive(MqttApplicationMessageReceivedEventArgs e)
+        {
+            //Console.WriteLine(e.ToString());
+            //var s = new Subscribe_Tag_class();
+            Console.WriteLine(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+            var s = JsonSerializer.Deserialize<Subscribe_Tag_class>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+            Console.WriteLine("Valor: "+s.Value.ToString());
+        }
         public static async Task Subscribe_Topic()
         {
             /*

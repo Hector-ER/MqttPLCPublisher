@@ -5,8 +5,10 @@ using libplctag;
 using libplctag.DataTypes.Simple;
 using MqttPLCPublisher;
 using System.Xml;
+using System.Reflection;
+using MQTTnet.Server;
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("MqttPLCPublisher Ver."+ Assembly.GetExecutingAssembly().GetName().Version);
 
 // Lee archivo .xml
 /*
@@ -34,6 +36,7 @@ Dictionary<String, Tagx> Tags = new Dictionary<string, Tagx>();
 Dictionary<String, Broker> Brokers = new Dictionary<string, Broker>();
 Dictionary<String, Publish> Publishes = new Dictionary<string, Publish>();
 Dictionary<String, Subscribe> Subscribes = new Dictionary<string, Subscribe>();
+Dictionary<String, Template> Templates = new Dictionary<string, Template>();
 
 Tagx.PLCs = PLCs;
 Publish.Brokers = Brokers;
@@ -53,7 +56,16 @@ try
         XmlNodeList nl = c_nodo.ChildNodes;
         foreach (XmlNode e in nl)
         {
-            if (e.Name == "PLC")
+         /*   if (e.Name.ToUpper() == "TEMPLATE")
+            {
+                Template t = new Template(e);
+                Templates.Add(t.Nombre, t);
+                /*if (e.Attributes.GetNamedItem("Name") != null)
+                {
+                    Console.WriteLine("Cargando... PLC = " + e.Attributes.GetNamedItem("Name").Value);
+                }*/
+          //  }
+            if (e.Name.ToUpper() == "PLC")
             {
                 PLC p = new PLC(e);
                 PLCs.Add(p.Nombre, p);
@@ -62,7 +74,7 @@ try
                     Console.WriteLine("Cargando... PLC = " + e.Attributes.GetNamedItem("Name").Value);
                 }*/
             }
-            if (e.Name == "Tag")
+            if (e.Name.ToUpper() == "TAG")
             {
                 Tagx t = new Tagx(e);
                 if (t.Plc == null)
@@ -79,18 +91,18 @@ try
                     Console.WriteLine("Cargando... Tag = " + e.Attributes.GetNamedItem("Name").Value);
                 }*/
             }
-            if (e.Name == "Broker")
+            if (e.Name.ToUpper() == "BROKER")
             {
                 Broker b = new Broker(e);
                 Brokers.Add(b.Nombre, b);
 
             }
-            if (e.Name == "Publish")
+            if (e.Name.ToUpper() == "PUBLISH")
             {
                 Publish b = new Publish(e);
                 Publishes.Add("", b);
             }
-            if (e.Name == "Subscribe")
+            if (e.Name.ToUpper() == "SUBSCRIBE")
             {
                 Subscribe b = new Subscribe(e);
                 Subscribes.Add("", b);

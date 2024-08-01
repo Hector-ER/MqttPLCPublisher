@@ -73,7 +73,7 @@ namespace MqttPLCPublisher
                         }
                         else
                         {
-                            Console.WriteLine(".");
+                            Console.WriteLine(" en Tag.");
 
                         }
                     }

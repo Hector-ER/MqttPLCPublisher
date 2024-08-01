@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Config>
+	<Template Name ="Template1">
+		<![CDATA[<Timestamp> |Timestamp| </Timestamp><Value> |Value| </Value>]]>
+	</Template>
+	<Template Name ="Template2">
+		<![CDATA[{ 'Timestamp' : |Timestamp|,  'Value' : '|Value|' }]]>
+	</Template>
+
 	<PLCx Name="Prueba"
 		Protocol="EIP"
 		Type="CLX"
