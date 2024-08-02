@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+	<Template Name ="Template1">
+		<![CDATA[<Timestamp> |Timestamp| </Timestamp><Value> |Value| </Value>]]>
+	</Template>
+	<Template Name ="Template2">
+		<![CDATA[{ 'Timestamp' : |Timestamp|,  'Value' : '|Value|' }]]>
+	</Template>
+
+	<PLCx Name="Prueba"
+		Protocol="EIP"
+		Type="CLX"
+		Address="192.168.1.10"
+		Path="1,0"
+		>
+		<!-- Timeout="5000"-->
+	</PLCx>
+	<PLC Name="CTM4"
+		Protocol="AB_EIP"
+		Type="ControlLogix"
+		Address="130.1.64.70"
+		Path="1,0"
+		Timeout="5000">
+	</PLC>
+	<Tagx Name="M18"
+		 Address="M18_Velocidad"
+		 Type="DINT"
+		 PLC="Prueba"
+		 Period= "100">
+	</Tagx>
+	<Tag Name="Test_vel"
+		 Address="test_vel"
+		 Type="DINT"
+		 PLC="CTM4"
+		 Period= "100">
+	</Tag>
+	<Tag Name="M18_Velocidad"
+		 Type="DINT"
+		 Period= "1000">
+		<PLC
+			Protocol="EIP"
+			Type="CLX"
+			Address="192.168.1.10"
+			Path="1,0"
+			>
+			<!-- Timeout="5000"-->
+		</PLC>>
+	</Tag>
+	<Broker Name="BA3490" Address="BA3490" Port="1883"/>
+	<Publish Topic="Prueba/Test"
+			 Broker="BA3490"
+			 Tag="Test_vel">
+	</Publish>
+	<Subscribe Broker="BA3490"
+			  Topic="Prueba/Test"
+			 >
+	</Subscribe>
+</Config>

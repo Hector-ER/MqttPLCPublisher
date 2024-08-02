@@ -74,7 +74,7 @@ namespace MqttPLCPublisher
             {
                 tag.Publishes.Add("", this);
             }
-            AlCambiar = false;
+            //AlCambiar = false;
         }
         public class Publish_Tag_class
         {

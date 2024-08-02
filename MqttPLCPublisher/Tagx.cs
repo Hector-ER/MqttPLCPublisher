@@ -217,7 +217,7 @@ namespace MqttPLCPublisher
                 
                 foreach (Publish p in Publishes.Values)
                 {
-                    if (!p.AlCambiar || Valor != ValorAnterior)
+                    if (!p.AlCambiar || !Valor.Equals(ValorAnterior))
                     {
                         p.ejecutar();
                     }
