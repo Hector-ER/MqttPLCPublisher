@@ -221,7 +221,7 @@ namespace MqttPLCPublisher
                     {
                         p.ejecutar();
                     }
-                    
+               
                 }
             } catch (Exception e2)
             {

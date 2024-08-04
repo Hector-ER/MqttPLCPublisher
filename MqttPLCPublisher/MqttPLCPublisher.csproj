@@ -5,12 +5,27 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
 	  <Nullable>enable</Nullable>
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <Title>MqttPLCPublisher</Title>
+	  <Version>0.1.0</Version>
+	  <Description>Descripción</Description>
+	  <Copyright>Héctor Rey</Copyright>
+	  <PackageReadmeFile>Leame</PackageReadmeFile>
+	  <RepositoryUrl>https://github.com/Hector-ER/MqttPLCPublisher</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <PackageTags>MQTT; PLC; Allen Bradley; Ethernet/IP; Modbus TCP</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Leame">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="libplctag" Version="1.5.2" />
     <PackageReference Include="MQTTnet" Version="4.3.6.1152" />
-    <PackageReference Include="MQTTnet.Extensions.TopicTemplate" Version="4.3.5.1141" />
   </ItemGroup>
 
   <ItemGroup>

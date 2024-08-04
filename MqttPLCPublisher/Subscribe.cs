@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using MQTTnet.Client;
 using MQTTnet.Server;
-using MQTTnet.Extensions.TopicTemplate;
 using System.Text.Json;
 
 
@@ -16,7 +15,7 @@ namespace MqttPLCPublisher
 {
     internal class Subscribe
     {
-        static MqttTopicTemplate sampleTemplate = new MqttTopicTemplate("mqttnet/samples/topic/{id} {valor}");
+        //static MqttTopicTemplate sampleTemplate = new MqttTopicTemplate("mqttnet/samples/topic/{id} {valor}");
 
         public String Topico = "";
         public Broker broker;

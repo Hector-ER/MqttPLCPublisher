@@ -15,7 +15,7 @@ namespace MqttPLCPublisher
         public String Protocolo = "";
         public String Tipo = "";
         public String Direccion = "";
-        public String Ruta = "";
+        public String Ruta = "1";
         public int TimeOut = 1000;
         public libplctag.Protocol lib_protocol = libplctag.Protocol.ab_eip;
         public libplctag.PlcType lib_type = libplctag.PlcType.ControlLogix;
@@ -57,7 +57,7 @@ namespace MqttPLCPublisher
                         }
                         else
                         {
-                            Console.WriteLine(".");
+                            Console.WriteLine(" en PLC.");
                         }
                     }
                 }
