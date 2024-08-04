@@ -9,7 +9,7 @@
 	  <Title>MqttPLCPublisher</Title>
 	  <Version>0.1.0</Version>
 	  <Description>Descripción</Description>
-	  <Copyright>Héctor Rey</Copyright>
+	  <Copyright>Héctor E. Rey</Copyright>
 	  <PackageReadmeFile>Leame</PackageReadmeFile>
 	  <RepositoryUrl>https://github.com/Hector-ER/MqttPLCPublisher</RepositoryUrl>
 	  <RepositoryType>git</RepositoryType>

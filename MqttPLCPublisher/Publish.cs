@@ -22,7 +22,7 @@ namespace MqttPLCPublisher
         public String Topico;
         public Broker broker;
         public Tagx tag;
-        public Boolean AlCambiar;
+        public Boolean AlCambiar=true;
         public Publish(XmlNode conf)
         {
             if (conf.Attributes != null)
