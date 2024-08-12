@@ -1,4 +1,4 @@
-# MqttPLCPublisher
+﻿# MqttPLCPublisher
 Release 0.1
 
 **Descargar archivo binario [**Aquí**](http://hersoft.com.ar/MqttPLCPublisher/Release_0.1).**
