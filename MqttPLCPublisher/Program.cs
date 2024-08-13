@@ -100,12 +100,12 @@ try
             if (e.Name.ToUpper() == "PUBLISH")
             {
                 Publish b = new Publish(e);
-                Publishes.Add("", b);
+                Publishes.Add(b.GetHashCode().ToString(), b);
             }
             if (e.Name.ToUpper() == "SUBSCRIBE")
             {
                 Subscribe b = new Subscribe(e);
-                Subscribes.Add("", b);
+                Subscribes.Add(b.GetHashCode().ToString(), b);
             }
 
         }

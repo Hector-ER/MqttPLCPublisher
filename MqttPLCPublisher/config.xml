@@ -11,20 +11,39 @@
 		 Address="test_vel"
 		 Type="DINT"
 		 PLC="CTM4"
-		 Period= "100">
+		 Period= "30000">
+	</Tag>
+	<Tag Name="DINT"
+		 Address="Prueba_Mqtt_Dint"
+		 Type="DINT"
+		 PLC="CTM4"
+		 Period= "30000">
+	</Tag>
+	<Tag Name="BOOL"
+		 Address="Prueba_Mqtt_Bool"
+		 Type="BOOL"
+		 PLC="CTM4"
+		 Period= "10000">
 	</Tag>
 	<PLC Name="TC11"
 		Protocol="AB_EIP"
 		Type="SLC500"
 		Address="10.101.101.201"/>
-	<Tag Name="TALONES_X_MINUTO"
+	<!--Tag Name="TALONES_X_MINUTO"
 		 Address="N106:51"
 		 Type="INT"
 		 PLC="TC11"
-		 Period= "1000"/>
+		 Period= "1000"/-->
 	<Broker Name="BA3490" Address="BA3490" Port="1883"/>
 	<Publish Topic="RadialAuto/Materiales/TC11/TalonesXMinuto"
 			 Broker="BA3490"
 			 Tag="Test_vel"
 		     OnChange="True"/>
+	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Dint"
+			 Broker="BA3490"
+			 Tag="DINT"
+		     OnChange="True"/>
+	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Dint/In"
+			 Broker="BA3490"
+			 Tag="DINT"/>
 </Config>

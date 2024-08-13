@@ -9,6 +9,8 @@ using System.Xml;
 using MQTTnet.Client;
 using MQTTnet.Server;
 using System.Text.Json;
+using libplctag.DataTypes.Simple;
+using libplctag;
 
 
 namespace MqttPLCPublisher
@@ -43,9 +45,24 @@ namespace MqttPLCPublisher
 
         public class Subscribe_Tag_class
         {
+            /*public Subscribe_Tag_class(ITag t)
+            {
+                Value = t;
+            }*/
             public long Timestamp { get; set; }
-            public object Value { get; set; }
+            public Object Value { get; set; }
         }
+
+        public class Subscribe_Tag_class_DINT
+        {
+            /*public Subscribe_Tag_class(ITag t)
+            {
+                Value = t;
+            }*/
+            public long Timestamp { get; set; }
+            public int Value { get; set; }
+        }
+
 
         public async void ejecutar()
         {
@@ -107,13 +124,71 @@ namespace MqttPLCPublisher
 
             }
         }
-        public static async Task MessageRecive(MqttApplicationMessageReceivedEventArgs e)
+        public async Task MessageRecive(MqttApplicationMessageReceivedEventArgs e)
         {
             //Console.WriteLine(e.ToString());
             //var s = new Subscribe_Tag_class();
             Console.WriteLine(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
-            var s = JsonSerializer.Deserialize<Subscribe_Tag_class>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
-            Console.WriteLine("Valor: "+s.Value.ToString());
+            //Subscribe_Tag_class s=new Subscribe_Tag_class(new TagDint());
+            Subscribe_Tag_class_DINT s = null;
+            try
+            {
+                s = JsonSerializer.Deserialize<Subscribe_Tag_class_DINT>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                Console.WriteLine("Valor: " + s.Value.ToString());
+
+            } catch (Exception e1)
+            {
+                Console.WriteLine("Excepción: " + e1.ToString());
+            }
+            if (tag!=null && s !=null)
+            {
+                try
+                {
+                    if ("BOOL".CompareTo(tag.Tipo) == 0)
+                    {
+                        if ("TRUE".CompareTo(s.Value.ToString().ToUpper())==0)
+                        {
+                            tag.lib_tag.Value = true;
+                        }
+                        else
+                        {
+                            tag.lib_tag.Value = false;
+                        }
+                    }
+                    else if ("DINT".CompareTo(tag.Tipo) == 0)
+                    {
+                        
+                        tag.lib_tag.Value= s.Value;
+                        
+                    }
+                    else if ("INT".CompareTo(tag.Tipo) == 0)
+                    {
+                        tag.lib_tag.Value = s.Value;
+                    }
+                    else if ("LINT".CompareTo(tag.Tipo) == 0)
+                    {
+                        tag.lib_tag.Value = s.Value;
+                    }
+                    else if ("LREAL".CompareTo(tag.Tipo) == 0)
+                    {
+                        tag.lib_tag.Value = s.Value;
+                    }
+                    else
+                    {
+                        s = null;
+                    }
+
+                    if (s != null)
+                    {
+                        // tag.lib_tag.Value = s.Value;
+                        await tag.lib_tag.WriteAsync();
+                    }
+                } catch (Exception e1)
+                {
+                    Console.WriteLine("Excepción: " + e1.ToString());
+                }
+                
+            }
         }
         public static async Task Subscribe_Topic()
         {

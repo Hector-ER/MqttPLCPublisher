@@ -34,7 +34,7 @@ namespace MqttPLCPublisher
         public String Tipo = "";
         public String NombrePLC = "";
         
-        ITag lib_tag; 
+        public ITag lib_tag; 
 
 
         public Tagx(XmlNode conf) {
