@@ -1,6 +1,6 @@
-# MqttPLCPublisher
+﻿# MqttPLCPublisher
 Release 0.1  
-Copyright 2024 - Héctor E. Rey  
+Copyright 2024 - [Héctor E. Rey](maito:"hectorerey@yahoo.com")  
 GPL v2.0  
 
 MqttPLCPublisher realiza de forma fácil y sin ningúna aplicación intermediaria la publicación de variables de PLCs comunicados por Ethernet en brokers Mqtt.
@@ -81,5 +81,3 @@ El objeto Subscribe define una subscripción a un tópico en el broker. Al reali
 **Tag:** Indica dónde se escribirá el valor al recibir el mensaje de la subscripción.  
 
 **Nota**: En este release 0.1 las publicaciones se realizan con em formato JSON con dos campos: Timestamp y Value. Este mismo formato es esperado en las subscripciones, donde el valor de Timestamp es ignorado y Value es pasado al PLC.  
-
-

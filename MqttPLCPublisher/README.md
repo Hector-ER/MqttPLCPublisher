@@ -1,6 +1,6 @@
 ﻿# MqttPLCPublisher
 Release 0.1  
-Copyright 2024 - Héctor E. Rey  
+Copyright 2024 - [Héctor E. Rey](maito:"hectorerey@yahoo.com")  
 GPL v2.0  
 
 MqttPLCPublisher realiza de forma fácil y sin ningúna aplicación intermediaria la publicación de variables de PLCs comunicados por Ethernet en brokers Mqtt.
