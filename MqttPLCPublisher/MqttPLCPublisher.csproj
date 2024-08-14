@@ -17,21 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Leame">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="libplctag" Version="1.5.2" />
     <PackageReference Include="MQTTnet" Version="4.3.6.1152" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="config_prueba.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

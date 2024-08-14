@@ -50,30 +50,15 @@ namespace MqttPLCPublisher
 
                 }
             }
-
-            /*
-             if (conf.Attributes.GetNamedItem("Name") != null)
-            {
-                Nombre = conf.Attributes.GetNamedItem("Name").Value;
-            }
-            if (conf.Attributes.GetNamedItem("Address") != null)
-            {
-                Direccion = conf.Attributes.GetNamedItem("Address").Value;
-            }
-            if (conf.Attributes.GetNamedItem("Port") != null)
-            {
-                Puerto = Int32.Parse(conf.Attributes.GetNamedItem("Port").Value);
-            }*/
         }
 
         public async void conectar()
         {
-            string broker = Nombre; //   "BA3490";
-            int port = Puerto; // 1883;
+            string broker = Direccion;
+            int port = Puerto;
             string clientId = Guid.NewGuid().ToString();
-            //string topic = "Csharp/mqtt";
-            string username = Usuario; // "emqxtest";
-            string password = Password; // "******";
+            string username = Usuario;
+            string password = Password;
 
             // Create a MQTT client factory
             factory = new MqttFactory();
@@ -95,8 +80,7 @@ namespace MqttPLCPublisher
             {
                 if (mqttClient.IsConnected) { break; }
             }
-            //System.Threading.Thread.Sleep(10000);
-
+            
         }
     }
 }

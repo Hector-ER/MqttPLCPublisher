@@ -1,5 +1,7 @@
 ﻿# MqttPLCPublisher
 Release 0.1
+Copyright 2024 - Héctor E. Rey
+GPL v2.0
 
 **Descargar archivo binario [**Aquí**](http://hersoft.com.ar/MqttPLCPublisher/Release_0.1).**
 

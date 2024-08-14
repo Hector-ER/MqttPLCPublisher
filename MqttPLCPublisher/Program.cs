@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using libplctag.DataTypes;
+﻿using libplctag.DataTypes;
 using libplctag;
 using libplctag.DataTypes.Simple;
 using MqttPLCPublisher;
@@ -8,35 +6,16 @@ using System.Xml;
 using System.Reflection;
 using MQTTnet.Server;
 
-Console.WriteLine("MqttPLCPublisher Ver."+ Assembly.GetExecutingAssembly().GetName().Version);
-
-// Lee archivo .xml
-/*
- * El XML tendrá un elemento Tags
- *      Habrá objeto TAG
- *          Cada Objeto Tag tendrá Path, Tag, Tipo
- *          Tendrá Tiempo de refresco
- * Habrá otro obeto Brokers
- *      HAbrá Tags Broker
- *          Tendrá Nombre
- *          Dirección
- *          Puerto
- *          (Certificado, Usuario, Contraseña)
- * Tendrá otro objeto Publicaciones
- *      Tendrá nombre
- *          Broker
- *          Formato
- *          Tag
- *          Actualización: Tiempo de refresco / al cambiar
- */
-
+Console.WriteLine("MqttPLCPublisher Ver." + Assembly.GetExecutingAssembly().GetName().Version);
+Console.WriteLine("Copyright 2024 - Héctor E. Rey");
+Console.WriteLine("GPL 2.0");
+Console.WriteLine("");
 
 Dictionary<String, PLC> PLCs = new Dictionary<String, PLC>();
 Dictionary<String, Tagx> Tags = new Dictionary<string, Tagx>(); 
 Dictionary<String, Broker> Brokers = new Dictionary<string, Broker>();
 Dictionary<String, Publish> Publishes = new Dictionary<string, Publish>();
 Dictionary<String, Subscribe> Subscribes = new Dictionary<string, Subscribe>();
-Dictionary<String, Template> Templates = new Dictionary<string, Template>();
 
 Tagx.PLCs = PLCs;
 Publish.Brokers = Brokers;
@@ -44,6 +23,8 @@ Publish.Tags = Tags;
 Subscribe.Brokers = Brokers;
 Subscribe.Tags = Tags;
 Subscribe.Subscribes = Subscribes;
+
+//  Lee el archivo de configuración
 
 try
 {
@@ -55,23 +36,10 @@ try
         XmlNodeList nl = c_nodo.ChildNodes;
         foreach (XmlNode e in nl)
         {
-         /*   if (e.Name.ToUpper() == "TEMPLATE")
-            {
-                Template t = new Template(e);
-                Templates.Add(t.Nombre, t);
-                /*if (e.Attributes.GetNamedItem("Name") != null)
-                {
-                    Console.WriteLine("Cargando... PLC = " + e.Attributes.GetNamedItem("Name").Value);
-                }*/
-          //  }
             if (e.Name.ToUpper() == "PLC")
             {
                 PLC p = new PLC(e);
                 PLCs.Add(p.Nombre, p);
-                /*if (e.Attributes.GetNamedItem("Name") != null)
-                {
-                    Console.WriteLine("Cargando... PLC = " + e.Attributes.GetNamedItem("Name").Value);
-                }*/
             }
             if (e.Name.ToUpper() == "TAG")
             {
@@ -82,13 +50,9 @@ try
                 }
                 else
                 {
-                    Tags.Add(t.Nombre,t ); // + "@" + t.Plc.Nombre, t);
+                    Tags.Add(t.Nombre,t ); 
                 }
 
-                /*if (e.Attributes.GetNamedItem("Name") != null)
-                {
-                    Console.WriteLine("Cargando... Tag = " + e.Attributes.GetNamedItem("Name").Value);
-                }*/
             }
             if (e.Name.ToUpper() == "BROKER")
             {
@@ -114,13 +78,7 @@ try
     Console.WriteLine("Error al leer la configuración: " + e.ToString());
 }
 
-// Conecta al Broaker
-
-//'Globales g = new Globales();
-
-//g.conectarAlBroaker();
-
-//g.publish();
+// Conecta a los Broakers
 
 foreach (Broker b in Brokers.Values)
 {
@@ -134,24 +92,16 @@ foreach (Tagx t in Tags.Values)
     t.leer();
 }
 
-/*foreach (Publish p in Publishes.Values)
-{
-    p.ejecutar();
-}*/
-// Cada Tag se publica
+// Realiza las subsctipciones
 
 foreach (Subscribe p in Subscribes.Values)
 {
     p.ejecutar();
 }
 
+// Queda esperando por siempre.
+
 while (true)
 {
-    //Thread.Sleep(1000);
     Console.ReadLine();
- //   Console.WriteLine(Tags.Values.First().Valor.ToString());
 };
-
-Console.WriteLine("Bye.!");
-
-//Console.ReadLine();

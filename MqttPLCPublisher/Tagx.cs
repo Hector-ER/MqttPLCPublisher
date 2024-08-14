@@ -25,8 +25,6 @@ namespace MqttPLCPublisher
         public String Direccion = "";
         public int Periodo = 100000;
         public Object Valor;
-        public int Estado = 0;  // 1 = leído
-        public int quality = 0;
         public DateTime timestamp;
         public bool Inicializado = false;
         System.Timers.Timer timer;
@@ -83,7 +81,6 @@ namespace MqttPLCPublisher
             if ("BOOL".CompareTo(Tipo) == 0)
             {
                 lib_tag = new TagBool();
-
             }
             else if ("DINT".CompareTo(Tipo) == 0)
             {
@@ -123,7 +120,6 @@ namespace MqttPLCPublisher
                 }
             }
             
-
             XmlNodeList nl = conf.ChildNodes;
             foreach (XmlNode n in nl)
             {
@@ -159,11 +155,6 @@ namespace MqttPLCPublisher
                         lib_tag.Protocol = Plc.lib_protocol;
                         lib_tag.Timeout = TimeSpan.FromMilliseconds(Plc.TimeOut);
                         lib_tag.ReadCompleted += T_ReadCompleted;
-                        //lib_tag.Aborted += T_Aborted;
-                        //lib_tag.Destroyed += T_Destroyed;
-                        //lib_tag.ReadStarted += T_ReadStarted;
-                        //lib_tag.WriteCompleted += T_WriteCompleted;
-                        //lib_tag.WriteStarted += T_WriteStarted;
                         timer = new System.Timers.Timer(Periodo);
                         timer.Elapsed += timer_Elapsed;
                         await lib_tag.InitializeAsync();
@@ -176,7 +167,6 @@ namespace MqttPLCPublisher
                     timer.AutoReset = false;
                     
                 }
-                Estado = 0;
                 try
                 {
                     _ = await lib_tag.ReadAsync(); 
@@ -190,31 +180,6 @@ namespace MqttPLCPublisher
             timer.Start();
         }
 
-        /*private void T_WriteStarted(object? sender, libplctag.TagEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        private void T_Destroyed(object? sender, libplctag.TagEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void T_WriteCompleted(object? sender, libplctag.TagEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void T_ReadStarted(object? sender, libplctag.TagEventArgs e)
-        {
-            //((Tagx) sender).Valor = 1;
-            //throw new NotImplementedException();
-        } */
-
-        public void T_Aborted(object? sender, libplctag.TagEventArgs e)
-        {
-            Console.Write("- XX");
-            Estado = 2;  // Error
-        }
 
         public void T_ReadCompleted(object? sender, libplctag.TagEventArgs e)
         {
@@ -224,8 +189,6 @@ namespace MqttPLCPublisher
                 var ValorAnterior = Valor;
                 Console.Write("- "+ lib_tag.Value.ToString());
                 Valor = lib_tag.Value;
-                Estado = 1; // Lectura Ok
-                quality = 1;
                 timestamp = DateTime.Now;
                 
                 foreach (Publish p in Publishes.Values)
@@ -240,11 +203,7 @@ namespace MqttPLCPublisher
             {
                     Console.WriteLine("Error: " + e2.ToString());
             }
-            //timer.Elapsed += timer_Elapsed;
-            //timer.Start();
-            //catch
-            //throw new NotImplementedException();
-            //Console.WriteLine("------------");
+
         }
 
         public async void timer_Elapsed(object? sender, ElapsedEventArgs e)
@@ -253,6 +212,5 @@ namespace MqttPLCPublisher
          }
 
     }
-
     
 }

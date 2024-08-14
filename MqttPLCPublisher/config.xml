@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Config>
-	<PLC Name="CTM4"
+	<PLC Name="PLC_PRUEBA"
 		Protocol="AB_EIP"
 		Type="ControlLogix"
 		Address="130.1.64.70"
@@ -10,55 +10,55 @@
 	<Tag Name="Test_vel"
 		 Address="test_vel"
 		 Type="DINT"
-		 PLC="CTM4"
+		 PLC="PLC_PRUEBA"
 		 Period= "30000">
 	</Tag>
 	<Tag Name="BOOL"
 		 Address="Prueba_Mqtt_Bool"
 		 Type="BOOL"
-		 PLC="CTM4"
+		 PLC="PLC_PRUEBA"
 		 Period= "10000">
 	</Tag>
 	<Tag Name="DINT"
 		 Address="Prueba_Mqtt_Dint"
 		 Type="DINT"
-		 PLC="CTM4"
+		 PLC="PLC_PRUEBA"
 		 Period= "30000">
 	</Tag>
 	<Tag Name="INT"
 		 Address="Prueba_Mqtt_Int"
 		 Type="INT"
-		 PLC="CTM4"
+		 PLC="PLC_PRUEBA"
 		 Period= "30000">
 	</Tag>
 	<Tag Name="SINT"
 		 Address="Prueba_Mqtt_Sint"
 		 Type="SINT"
-		 PLC="CTM4"
+		 PLC="PLC_PRUEBA"
 		 Period= "30000">
 	</Tag>
 	<Tag Name="LINT"
 		 Address="Prueba_Mqtt_Lint"
 		 Type="LINT"
-		 PLC="CTM4"
+		 PLC="PLC_PRUEBA"
 		 Period= "30000">
 	</Tag>
 	<Tag Name="REAL"
 		 Address="Prueba_Mqtt_Real"
 		 Type="REAL"
-		 PLC="CTM4"
+		 PLC="PLC_PRUEBA"
 		 Period= "30000">
 	</Tag>
 	<Tag Name="LREAL"
 		 Address="Prueba_Mqtt_Lreal"
 		 Type="LREAL"
-		 PLC="CTM4"
+		 PLC="PLC_PRUEBA"
 		 Period= "30000">
 	</Tag>
 	<Tag Name="String"
 		 Address="Prueba_Mqtt_String"
 		 Type="String"
-		 PLC="CTM4"
+		 PLC="PLC_PRUEBA"
 		 Period= "30000">
 	</Tag>
 	<PLC Name="TC11"
@@ -70,65 +70,65 @@
 		 Type="INT"
 		 PLC="TC11"
 		 Period= "1000"/-->
-	<Broker Name="BA3490" Address="BA3490" Port="1883"/>
+	<Broker Name="Mi_Broker" Address="BA3490" Port="1883"/>
 	<Publish Topic="RadialAuto/Materiales/TC11/TalonesXMinuto"
-			 Broker="BA3490"
+			 Broker="Mi_Broker"
 			 Tag="Test_vel"
 		     OnChange="True"/>
-	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Bool"
-			 Broker="BA3490"
+	<Publish Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Bool"
+			 Broker="Mi_Broker"
 			 Tag="Bool"
 		     OnChange="True"/>
-	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Bool/In"
-			 Broker="BA3490"
+	<Subscribe Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Bool/In"
+			 Broker="Mi_Broker"
 			 Tag="BOOL"/>
-	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Dint"
-			 Broker="BA3490"
+	<Publish Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Dint"
+			 Broker="Mi_Broker"
 			 Tag="DINT"
 		     OnChange="True"/>
-	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Dint/In"
-			 Broker="BA3490"
+	<Subscribe Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Dint/In"
+			 Broker="Mi_Broker"
 			 Tag="DINT"/>
-	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Int"
-			 Broker="BA3490"
+	<Publish Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Int"
+			 Broker="Mi_Broker"
 			 Tag="INT"
 		     OnChange="True"/>
-	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Int/In"
-			 Broker="BA3490"
+	<Subscribe Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Int/In"
+			 Broker="Mi_Broker"
 			 Tag="INT"/>
-	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Sint"
-			 Broker="BA3490"
+	<Publish Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Sint"
+			 Broker="Mi_Broker"
 			 Tag="SINT"
 		     OnChange="True"/>
-	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Sint/In"
-			 Broker="BA3490"
+	<Subscribe Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Sint/In"
+			 Broker="Mi_Broker"
 			 Tag="SINT"/>
-	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lint"
-			 Broker="BA3490"
+	<Publish Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Lint"
+			 Broker="Mi_Broker"
 			 Tag="LINT"
 		     OnChange="True"/>
-	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lint/In"
-			 Broker="BA3490"
+	<Subscribe Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Lint/In"
+			 Broker="Mi_Broker"
 			 Tag="LINT"/>
-	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Real"
-			 Broker="BA3490"
+	<Publish Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Real"
+			 Broker="Mi_Broker"
 			 Tag="REAL"
 		     OnChange="True"/>
-	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Real/In"
-			 Broker="BA3490"
+	<Subscribe Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Real/In"
+			 Broker="Mi_Broker"
 			 Tag="REAL"/>
-	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lreal"
-			 Broker="BA3490"
+	<Publish Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Lreal"
+			 Broker="Mi_Broker"
 			 Tag="LREAL"
 		     OnChange="True"/>
-	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lreal/In"
-			 Broker="BA3490"
+	<Subscribe Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_Lreal/In"
+			 Broker="Mi_Broker"
 			 Tag="LREAL"/>
-	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_String"
-			 Broker="BA3490"
+	<Publish Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_String"
+			 Broker="Mi_Broker"
 			 Tag="STRING"
 		     OnChange="True"/>
-	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_String/In"
-			 Broker="BA3490"
+	<Subscribe Topic="RadialCamion/Materiales/PLC_PRUEBA/Prueba_Mqtt_String/In"
+			 Broker="Mi_Broker"
 			 Tag="STRING"/>
 </Config>
