@@ -13,17 +13,35 @@
 		 PLC="CTM4"
 		 Period= "30000">
 	</Tag>
+	<Tag Name="BOOL"
+		 Address="Prueba_Mqtt_Bool"
+		 Type="BOOL"
+		 PLC="CTM4"
+		 Period= "10000">
+	</Tag>
 	<Tag Name="DINT"
 		 Address="Prueba_Mqtt_Dint"
 		 Type="DINT"
 		 PLC="CTM4"
 		 Period= "30000">
 	</Tag>
-	<Tag Name="BOOL"
-		 Address="Prueba_Mqtt_Bool"
-		 Type="BOOL"
+	<Tag Name="INT"
+		 Address="Prueba_Mqtt_Int"
+		 Type="INT"
 		 PLC="CTM4"
-		 Period= "10000">
+		 Period= "30000">
+	</Tag>
+	<Tag Name="LINT"
+		 Address="Prueba_Mqtt_Lint"
+		 Type="LINT"
+		 PLC="CTM4"
+		 Period= "30000">
+	</Tag>
+	<Tag Name="LREAL"
+		 Address="Prueba_Mqtt_Lreal"
+		 Type="LREAL"
+		 PLC="CTM4"
+		 Period= "30000">
 	</Tag>
 	<PLC Name="TC11"
 		Protocol="AB_EIP"
@@ -39,6 +57,13 @@
 			 Broker="BA3490"
 			 Tag="Test_vel"
 		     OnChange="True"/>
+	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Bool"
+			 Broker="BA3490"
+			 Tag="Bool"
+		     OnChange="True"/>
+	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Bool/In"
+			 Broker="BA3490"
+			 Tag="BOOL"/>
 	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Dint"
 			 Broker="BA3490"
 			 Tag="DINT"
@@ -46,4 +71,25 @@
 	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Dint/In"
 			 Broker="BA3490"
 			 Tag="DINT"/>
+	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Int"
+			 Broker="BA3490"
+			 Tag="INT"
+		     OnChange="True"/>
+	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Int/In"
+			 Broker="BA3490"
+			 Tag="INT"/>
+	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lint"
+			 Broker="BA3490"
+			 Tag="LINT"
+		     OnChange="True"/>
+	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lint/In"
+			 Broker="BA3490"
+			 Tag="LINT"/>
+	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lreal"
+			 Broker="BA3490"
+			 Tag="LREAL"
+		     OnChange="True"/>
+	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lreal/In"
+			 Broker="BA3490"
+			 Tag="LREAL"/>
 </Config>

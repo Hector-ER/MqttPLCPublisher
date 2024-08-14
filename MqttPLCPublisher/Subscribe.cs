@@ -20,15 +20,18 @@ namespace MqttPLCPublisher
         //static MqttTopicTemplate sampleTemplate = new MqttTopicTemplate("mqttnet/samples/topic/{id} {valor}");
 
         public String Topico = "";
+        public String Nombre = "";
         public Broker broker;
 
         public static Dictionary<String, Tagx> Tags;
         public static Dictionary<String, Broker> Brokers;
+        public static Dictionary<String, Subscribe> Subscribes;
 
         public Tagx tag;
 
         public Subscribe(XmlNode conf)
         {
+            Nombre = GetHashCode().ToString();
             if (conf.Attributes.GetNamedItem("Topic") != null)
             {
                 Topico = conf.Attributes.GetNamedItem("Topic").Value;
@@ -53,7 +56,17 @@ namespace MqttPLCPublisher
             public Object Value { get; set; }
         }
 
-        public class Subscribe_Tag_class_DINT
+        public class Subscribe_Tag_class_Bool
+        {
+            /*public Subscribe_Tag_class(ITag t)
+            {
+                Value = t;
+            }*/
+            public long Timestamp { get; set; }
+            public Boolean Value { get; set; }
+        }
+
+        public class Subscribe_Tag_class_Int
         {
             /*public Subscribe_Tag_class(ITag t)
             {
@@ -62,6 +75,43 @@ namespace MqttPLCPublisher
             public long Timestamp { get; set; }
             public int Value { get; set; }
         }
+        public class Subscribe_Tag_class_Int16
+        {
+            /*public Subscribe_Tag_class(ITag t)
+            {
+                Value = t;
+            }*/
+            public long Timestamp { get; set; }
+            public Int16 Value { get; set; }
+        }
+        public class Subscribe_Tag_class_Int64
+        {
+            /*public Subscribe_Tag_class(ITag t)
+            {
+                Value = t;
+            }*/
+            public long Timestamp { get; set; }
+            public Int64 Value { get; set; }
+        }
+        public class Subscribe_Tag_class_String
+        {
+            /*public Subscribe_Tag_class(ITag t)
+            {
+                Value = t;
+            }*/
+            public long Timestamp { get; set; }
+            public String Value { get; set; }
+        }
+        public class Subscribe_Tag_class_Double
+        {
+            /*public Subscribe_Tag_class(ITag t)
+            {
+                Value = t;
+            }*/
+            public long Timestamp { get; set; }
+            public double Value { get; set; }
+        }
+
 
 
         public async void ejecutar()
@@ -128,61 +178,68 @@ namespace MqttPLCPublisher
         {
             //Console.WriteLine(e.ToString());
             //var s = new Subscribe_Tag_class();
-            Console.WriteLine(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+            //Console.WriteLine(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
             //Subscribe_Tag_class s=new Subscribe_Tag_class(new TagDint());
-            Subscribe_Tag_class_DINT s = null;
+            //Object s = null;
+            Tagx tag2 = Subscribes.GetValueOrDefault(e.ApplicationMessage.Topic).tag;
+            if (tag2!=tag)
+            {
+                return;
+            }
             try
             {
-                s = JsonSerializer.Deserialize<Subscribe_Tag_class_DINT>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                var s = JsonSerializer.Deserialize<Subscribe_Tag_class>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                Console.Write("Tag: " + tag2.Nombre+"  ");
                 Console.WriteLine("Valor: " + s.Value.ToString());
 
             } catch (Exception e1)
             {
                 Console.WriteLine("Excepción: " + e1.ToString());
             }
-            if (tag!=null && s !=null)
+            if (tag2!=null)
             {
                 try
                 {
-                    if ("BOOL".CompareTo(tag.Tipo) == 0)
+                    if ("BOOL".CompareTo(tag2.Tipo) == 0)
                     {
-                        if ("TRUE".CompareTo(s.Value.ToString().ToUpper())==0)
+                        var s = JsonSerializer.Deserialize<Subscribe_Tag_class_Bool>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                        tag2.lib_tag.Value = s.Value;
+                        /*if ("TRUE".CompareTo(s.Value.ToString().ToUpper())==0)
                         {
                             tag.lib_tag.Value = true;
                         }
                         else
                         {
                             tag.lib_tag.Value = false;
-                        }
+                        }*/
                     }
-                    else if ("DINT".CompareTo(tag.Tipo) == 0)
+                    else if ("DINT".CompareTo(tag2.Tipo) == 0)
                     {
+                        var s = JsonSerializer.Deserialize<Subscribe_Tag_class_Int>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                        tag2.lib_tag.Value= s.Value;
                         
-                        tag.lib_tag.Value= s.Value;
-                        
                     }
-                    else if ("INT".CompareTo(tag.Tipo) == 0)
+                    else if ("INT".CompareTo(tag2.Tipo) == 0)
                     {
-                        tag.lib_tag.Value = s.Value;
+                        var s = JsonSerializer.Deserialize<Subscribe_Tag_class_Int16>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                        tag2.lib_tag.Value = s.Value;
                     }
-                    else if ("LINT".CompareTo(tag.Tipo) == 0)
+                    else if ("LINT".CompareTo(tag2.Tipo) == 0)
                     {
-                        tag.lib_tag.Value = s.Value;
+                        var s = JsonSerializer.Deserialize<Subscribe_Tag_class_Int64>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                        tag2.lib_tag.Value = s.Value;
                     }
-                    else if ("LREAL".CompareTo(tag.Tipo) == 0)
+                    else if ("LREAL".CompareTo(tag2.Tipo) == 0)
                     {
-                        tag.lib_tag.Value = s.Value;
+                        var s = JsonSerializer.Deserialize<Subscribe_Tag_class_Double>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                        tag2.lib_tag.Value = s.Value;
                     }
                     else
                     {
-                        s = null;
+                        Console.WriteLine("Error al procesar mensaje.");
+                        return;
                     }
-
-                    if (s != null)
-                    {
-                        // tag.lib_tag.Value = s.Value;
-                        await tag.lib_tag.WriteAsync();
-                    }
+                        await tag2.lib_tag.WriteAsync();
                 } catch (Exception e1)
                 {
                     Console.WriteLine("Excepción: " + e1.ToString());

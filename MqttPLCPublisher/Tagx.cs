@@ -170,6 +170,7 @@ namespace MqttPLCPublisher
                     _ = await lib_tag.ReadAsync(); 
                 } catch (Exception e)
                 {
+                    Console.WriteLine("Tag: " + Nombre + "   PLC: " + Plc.Nombre);
                     Console.WriteLine("Excepción " + e.ToString());
                 }
 

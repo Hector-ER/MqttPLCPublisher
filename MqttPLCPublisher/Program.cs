@@ -43,8 +43,7 @@ Publish.Brokers = Brokers;
 Publish.Tags = Tags;
 Subscribe.Brokers = Brokers;
 Subscribe.Tags = Tags;
-
-
+Subscribe.Subscribes = Subscribes;
 
 try
 {
@@ -105,7 +104,7 @@ try
             if (e.Name.ToUpper() == "SUBSCRIBE")
             {
                 Subscribe b = new Subscribe(e);
-                Subscribes.Add(b.GetHashCode().ToString(), b);
+                Subscribes.Add(b.Topico, b);
             }
 
         }
