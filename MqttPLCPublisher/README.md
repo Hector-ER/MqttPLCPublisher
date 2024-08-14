@@ -1,7 +1,7 @@
 ﻿# MqttPLCPublisher
-Release 0.1
-Copyright 2024 - Héctor E. Rey
-GPL v2.0
+Release 0.1  
+Copyright 2024 - Héctor E. Rey  
+GPL v2.0  
 
 **Descargar archivo binario [**Aquí**](http://hersoft.com.ar/MqttPLCPublisher/Release_0.1).**
 
@@ -52,7 +52,7 @@ El objeto TAG define cual es el tag del PLC que vamos a utilizar, ya sea para le
 **Name:** Le asigna un nombre al tag para poder referirse luego para publicarlo o usarlo en una subscripción.
 **PLC:** Indica el PLC dónde buscará el TAG.
 **Address:** Indica como se denomina el tag en el PLC. Si no se indica Address se utiliza el valor en **Name**.
-**Type:** Indica el tipo de datos. En este primer release 0.1 los valores posibles son: **BOOL**, **DINT**, **INT**, **SINT**, **LINT**, **REAL**, **LREAL** y **STRING**.
+**Type:** Indica el tipo de datos. En este primer release 0.1 los valores posibles son: **BOOL**, **DINT**, **INT**, **SINT**, **LINT**, **REAL**, **LREAL** y **STRING**.  
 **Period:** Indica cada cuantos milisegundos se intentará leer el tag en el PLC. El valor por defecto es de 10 segundos (10000 ms).
 
 ### \<Broker\>
