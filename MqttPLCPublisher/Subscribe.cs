@@ -93,6 +93,15 @@ namespace MqttPLCPublisher
             public long Timestamp { get; set; }
             public Int64 Value { get; set; }
         }
+        public class Subscribe_Tag_class_SByte
+        {
+            /*public Subscribe_Tag_class(ITag t)
+            {
+                Value = t;
+            }*/
+            public long Timestamp { get; set; }
+            public SByte Value { get; set; }
+        }
         public class Subscribe_Tag_class_String
         {
             /*public Subscribe_Tag_class(ITag t)
@@ -112,7 +121,15 @@ namespace MqttPLCPublisher
             public double Value { get; set; }
         }
 
-
+        public class Subscribe_Tag_class_Single
+        {
+            /*public Subscribe_Tag_class(ITag t)
+            {
+                Value = t;
+            }*/
+            public long Timestamp { get; set; }
+            public Single Value { get; set; }
+        }
 
         public async void ejecutar()
         {
@@ -224,14 +241,29 @@ namespace MqttPLCPublisher
                         var s = JsonSerializer.Deserialize<Subscribe_Tag_class_Int16>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
                         tag2.lib_tag.Value = s.Value;
                     }
+                    else if ("SINT".CompareTo(tag2.Tipo) == 0)
+                    {
+                        var s = JsonSerializer.Deserialize<Subscribe_Tag_class_SByte>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                        tag2.lib_tag.Value = s.Value;
+                    }
                     else if ("LINT".CompareTo(tag2.Tipo) == 0)
                     {
                         var s = JsonSerializer.Deserialize<Subscribe_Tag_class_Int64>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
                         tag2.lib_tag.Value = s.Value;
                     }
+                    else if ("REAL".CompareTo(tag2.Tipo) == 0)
+                    {
+                        var s = JsonSerializer.Deserialize<Subscribe_Tag_class_Single>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                        tag2.lib_tag.Value = s.Value;
+                    }
                     else if ("LREAL".CompareTo(tag2.Tipo) == 0)
                     {
                         var s = JsonSerializer.Deserialize<Subscribe_Tag_class_Double>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
+                        tag2.lib_tag.Value = s.Value;
+                    }
+                    else if ("STRING".CompareTo(tag2.Tipo) == 0)
+                    {
+                        var s = JsonSerializer.Deserialize<Subscribe_Tag_class_String>(Encoding.ASCII.GetString(e.ApplicationMessage.Payload));
                         tag2.lib_tag.Value = s.Value;
                     }
                     else

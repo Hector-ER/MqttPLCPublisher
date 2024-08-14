@@ -93,13 +93,25 @@ namespace MqttPLCPublisher
             {
                 lib_tag = new TagInt();
             }
+            else if ("SINT".CompareTo(Tipo) == 0)
+            {
+                lib_tag = new TagSint();
+            }
             else if ("LINT".CompareTo(Tipo) == 0)
             {
                 lib_tag = new TagLint();
             }
+            else if ("REAL".CompareTo(Tipo) == 0)
+            {
+                lib_tag = new TagReal();
+            }
             else if ("LREAL".CompareTo(Tipo) == 0)
             {
                 lib_tag = new TagLreal();
+            }
+            else if ("STRING".CompareTo(Tipo) == 0)
+            {
+                lib_tag = new TagString();
             }
             else
             {

@@ -31,15 +31,33 @@
 		 PLC="CTM4"
 		 Period= "30000">
 	</Tag>
+	<Tag Name="SINT"
+		 Address="Prueba_Mqtt_Sint"
+		 Type="SINT"
+		 PLC="CTM4"
+		 Period= "30000">
+	</Tag>
 	<Tag Name="LINT"
 		 Address="Prueba_Mqtt_Lint"
 		 Type="LINT"
 		 PLC="CTM4"
 		 Period= "30000">
 	</Tag>
+	<Tag Name="REAL"
+		 Address="Prueba_Mqtt_Real"
+		 Type="REAL"
+		 PLC="CTM4"
+		 Period= "30000">
+	</Tag>
 	<Tag Name="LREAL"
 		 Address="Prueba_Mqtt_Lreal"
 		 Type="LREAL"
+		 PLC="CTM4"
+		 Period= "30000">
+	</Tag>
+	<Tag Name="String"
+		 Address="Prueba_Mqtt_String"
+		 Type="String"
 		 PLC="CTM4"
 		 Period= "30000">
 	</Tag>
@@ -78,6 +96,13 @@
 	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Int/In"
 			 Broker="BA3490"
 			 Tag="INT"/>
+	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Sint"
+			 Broker="BA3490"
+			 Tag="SINT"
+		     OnChange="True"/>
+	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Sint/In"
+			 Broker="BA3490"
+			 Tag="SINT"/>
 	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lint"
 			 Broker="BA3490"
 			 Tag="LINT"
@@ -85,6 +110,13 @@
 	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lint/In"
 			 Broker="BA3490"
 			 Tag="LINT"/>
+	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Real"
+			 Broker="BA3490"
+			 Tag="REAL"
+		     OnChange="True"/>
+	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Real/In"
+			 Broker="BA3490"
+			 Tag="REAL"/>
 	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lreal"
 			 Broker="BA3490"
 			 Tag="LREAL"
@@ -92,4 +124,11 @@
 	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_Lreal/In"
 			 Broker="BA3490"
 			 Tag="LREAL"/>
+	<Publish Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_String"
+			 Broker="BA3490"
+			 Tag="STRING"
+		     OnChange="True"/>
+	<Subscribe Topic="RadialCamion/Materiales/CTM4/Prueba_Mqtt_String/In"
+			 Broker="BA3490"
+			 Tag="STRING"/>
 </Config>
