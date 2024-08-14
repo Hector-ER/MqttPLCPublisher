@@ -83,3 +83,5 @@ El objeto Subscribe define una subscripción a un tópico en el broker. Al reali
 **Tag:** Indica dónde se escribirá el valor al recibir el mensaje de la subscripción.  
 
 **Nota**: En este release 0.1 las publicaciones se realizan con em formato JSON con dos campos: Timestamp y Value. Este mismo formato es esperado en las subscripciones, donde el valor de Timestamp es ignorado y Value es pasado al PLC.  
+
+
