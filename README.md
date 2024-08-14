@@ -3,8 +3,6 @@ Release 0.1
 Copyright 2024 - Héctor E. Rey  
 GPL v2.0  
 
-**Descargar archivo binario [**Aquí**](http://hersoft.com.ar/MqttPLCPublisher/Release_0.1).**
-
 MqttPLCPublisher realiza de forma fácil y sin ningúna aplicación intermediaria la publicación de variables de PLCs comunicados por Ethernet en brokers Mqtt.
 
 La configuración se encuentra en un archivo config.xml en la carpeta en la que se ejecuta el programa.
